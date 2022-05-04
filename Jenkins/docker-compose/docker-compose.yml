@@ -1,0 +1,23 @@
+version: "3"
+networks:
+   jenkins:
+     external: false
+services:
+  jenkins-ci-server:
+    user: root
+    container_name: 'jenkins-ci-server'
+    image: jenkins/jenkins:alpine
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+    restart: always
+    networks:
+      - jenkins
+    volumes:
+      - /var/jenkins_home
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:rw
+      - /usr/bin/docker:/usr/bin/docker
+     ports:
+       - "8080:8080"
